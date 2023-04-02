@@ -93,7 +93,7 @@ const login = () => {
               className="font-light max-w-[70%] mt-1 text-center text-[22px] "
               style={{ lineHeight: 25 }}
             >
-              {"Wellcome back you've been missed!"}
+              {"Welcome back you've been missed!"}
             </Text>
 
             <TextInput
