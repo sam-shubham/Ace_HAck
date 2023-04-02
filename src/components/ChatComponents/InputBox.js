@@ -21,12 +21,13 @@ const InputBox = ({ send }) => {
   };
 
   return (
-    <View edges={["bottom"]} style={styles.container} className="bg-red-600">
+    <View edges={["bottom"]} style={styles.container} className="bg-blue-200">
       {/* Icon */}
       {/* <AntDesign name="plus" size={20} color="royalblue" /> */}
 
       {/* Text Input */}
       <TextInput
+        className="px-5"
         value={newMessage}
         onChangeText={setNewMessage}
         style={styles.input}
@@ -37,11 +38,11 @@ const InputBox = ({ send }) => {
       <TouchableOpacity
         style={{ elevation: 3 }}
         onPress={onSend}
-        className="h-[40px] w-[70px] justify-center items-center bg-red-500 rounded-md"
+        className="h-[40px] w-[70px] justify-center items-center bg-blue-600 rounded-md"
       >
         <Image
           source={
-            newMessage.trim().length <= 0
+            newMessage.trim().length <= 0 && false
               ? require("../../../assets/mic.png")
               : require("../../../assets/paper-plane.png")
           }

@@ -91,7 +91,7 @@ const Message = ({ message, last, next, isTyping }) => {
       style={[
         styles.container,
         {
-          backgroundColor: isMyMessage() ? "#fcc5d7" : "white",
+          backgroundColor: isMyMessage() ? "rgb(191,219,254)" : "white",
           alignSelf: isMyMessage() ? "flex-end" : "flex-start",
           marginBottom: last ? 15 : next.user.id != message.user.id ? 15 : 0,
         },
