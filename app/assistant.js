@@ -26,7 +26,7 @@ import socket from "../src/utils/socket";
 var MessageHistory = [];
 const { Configuration, OpenAIApi } = require("openai");
 const OpenAiConfig = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(OpenAiConfig);
 6;

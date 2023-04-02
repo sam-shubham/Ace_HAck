@@ -1,6 +1,5 @@
-const REGISTER_API = "http://192.168.122.12:4566/api/user/signup";
-const LOGIN_API = "http://192.168.122.12:4566/api/user/login";
-const SOCKET_HOST = "http://192.168.122.12:4566/api/AppSocket";
-const IMAGE_HOST = "https://admin.ifoodiesapp.com";
+const REGISTER_API = "https://e-medic.vercel.app/api/user/signup";
+const LOGIN_API = "https://e-medic.vercel.app/api/user/login";
+const SOCKET_HOST = "https://e-medic.vercel.app/api/AppSocket";
 
-export { REGISTER_API, LOGIN_API, SOCKET_HOST, IMAGE_HOST };
+export { REGISTER_API, LOGIN_API, SOCKET_HOST };

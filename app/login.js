@@ -8,6 +8,7 @@ import {
   StatusBar,
   TextInput,
   Alert,
+  Keyboard,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { AntDesign, FontAwesome5, Entypo } from "@expo/vector-icons";
@@ -16,16 +17,25 @@ import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
 import { LOGIN_API, REGISTER_API } from "../src/utils/vars";
 import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
 const login = () => {
+  async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+  }
+
   const [navState, setnavState] = useState("intro");
   const [passwordVisible, setpasswordVisible] = useState(false);
   const [Processing, setProcessing] = useState(false);
   const [UserInputData, setUserInputData] = useState({});
+
   const router = useRouter();
   useEffect(() => {
-    setnavState("register");
+    setnavState("intro");
   }, []);
+
+  // useEffect(() => {
+  // }, []);
 
   useEffect(() => {
     // setProcessing(true);
@@ -36,6 +46,8 @@ const login = () => {
 
   async function login() {
     try {
+      Keyboard.dismiss();
+
       setProcessing(true);
       let { data } = await axios.post(LOGIN_API, {
         email: UserInputData.email,
@@ -43,10 +55,16 @@ const login = () => {
       });
 
       setProcessing(false);
-      if (!data.success) return console.log("ERRRRR", data);
+      // console.log(data);
+      if (!data.success) return Alert.alert("Failed", data);
 
-      console.log(data);
-      Alert.alert("Success", data.message);
+      if (!data.success) return;
+
+      // console.log(data);
+      // Alert.alert("Success", data.message);
+      await save("user", JSON.stringify(UserInputData));
+      setUserInputData({});
+      router.replace("/home?name=" + data.name);
     } catch (e) {
       console.log(e);
 
@@ -56,18 +74,26 @@ const login = () => {
 
   async function register() {
     try {
+      Keyboard.dismiss();
+
       setProcessing(true);
-      console.log(UserInputData);
+      // console.log(UserInputData);
       let { data } = await axios.post(REGISTER_API, {
         ...UserInputData,
       });
 
       setProcessing(false);
 
-      if (!data.success) return console.log("ERRRRR", data);
+      if (!data.success && data.message)
+        return Alert.alert("Failed", data.message);
 
-      console.log(data);
-      Alert.alert("Success", data.message);
+      if (!data.success) return;
+
+      // console.log(data);
+      // Alert.alert("Success", data.message);
+      await save("user", JSON.stringify(UserInputData));
+      setUserInputData({});
+      router.replace("/home?name=" + data.name);
     } catch (e) {
       console.log(e);
     }
@@ -77,11 +103,9 @@ const login = () => {
     <View
       source={require("./../assets/splashbg.jpg")}
       className="w-full relative h-full bg-blue-100 items-center flex-col"
-      style={
-        {
-          // paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0,
-        }
-      }
+      style={{
+        paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0,
+      }}
     >
       <StatusBar
         style="dark"
@@ -116,12 +140,18 @@ const login = () => {
             </Text>
             <View className="w-[85%] h-[60px] bg-blue-300 rounded-xl mt-9 flex-row justify-between">
               <TouchableOpacity
+                onPress={() => {
+                  setnavState("login");
+                }}
                 className="bg-blue-200 flex-col justify-center items-center /border-[1px] /border-[#0002] w-[50%] h-full rounded-xl"
                 style={{ elevation: 0 }}
               >
                 <Text className="font-semibold text-[15px]">{"Login"}</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                onPress={() => {
+                  setnavState("register");
+                }}
                 className="bg-transparent flex-col justify-center items-center w-[50%] /border-[1px] border-[#0002] h-full rounded-md"
                 style={{ elevation: 0 }}
               >
@@ -187,7 +217,7 @@ const login = () => {
             <TouchableOpacity
               disabled={Processing}
               onPress={() => {
-                console.log(UserInputData);
+                // console.log(UserInputData);
                 if (UserInputData.email && UserInputData.password) {
                   login();
                 }
@@ -378,11 +408,9 @@ const login = () => {
         <>
           <StatusBar backgroundColor={"#0005"} />
           <View
-            style={
-              {
-                // marginTop: Platform.OS == "android" ? StatusBar.currentHeight : 0,
-              }
-            }
+            style={{
+              marginTop: Platform.OS == "android" ? StatusBar.currentHeight : 0,
+            }}
             className=" absolute w-full h-full flex-1 items-center justify-center bg-[#0005]"
           >
             <View className="w-[80%] h-[30%] rounded-xl bg-blue-100  flex-col items-center justify-center">

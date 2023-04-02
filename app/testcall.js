@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AgoraUIKit, { PropsInterface } from "agora-rn-uikit";
 
-const videocall = () => {
+const testcall = () => {
   const [videoCall, setVideoCall] = useState(true);
   const props = {
     connectionData: {
@@ -21,4 +21,4 @@ const videocall = () => {
   ) : null;
 };
 
-export default videocall;
+export default testcall;

@@ -5,6 +5,7 @@
       "bundler": "metro"
     },
     "android": {
+      "icon": "./assets/e.png",
       "package": "com.samshubham.eMedic"
     },
     "name": "eMedic",

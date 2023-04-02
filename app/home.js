@@ -5,9 +5,11 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import * as SecureStore from "expo-secure-store";
 import {
   AntDesign,
   FontAwesome5,
@@ -16,6 +18,8 @@ import {
   Ionicons,
   Foundation,
 } from "@expo/vector-icons";
+// import { useSearchParams } from "expo-router";
+
 // import { expo } from "expo";
 
 import {
@@ -28,13 +32,20 @@ import {
   // RecipiesSection,
 } from "../src/components";
 import AnimatedLottieView from "lottie-react-native";
+import { usePathname, useRouter, useSearchParams } from "expo-router";
 
 const home = () => {
   const CateogrySections = useRef();
   const [CateogryDatas, setCateogryDatas] = useState([]);
-  const [User, setUser] = useState({ name: "Sam" });
+  const [User, setUser] = useState({ name: "" });
+  const router = useRouter();
 
+  // const params = useSearchParams();
   // console.log("hhhh");
+
+  useEffect(() => {
+    // setUser({ ...User, name: params.name });
+  }, []);
 
   return (
     // <View>
@@ -47,27 +58,46 @@ const home = () => {
     >
       <StatusBar backgroundColor={"#ccdce9"} barStyle="dark-content" />
 
-      <Text className="text-4xl mt-9 ">{`Hi, ${User.name}!`}</Text>
+      <Text className="text-4xl mt-9 ">{`Hi, Sam!`}</Text>
       <View className="flex flex-row mt-8 items-center justify-evenly w-[80%]">
         <TouchableOpacity
+          onPress={() => {
+            router.push("/docters");
+          }}
           style={{ elevation: 8 }}
           className=" bg-white h-[60px] w-[60px] items-center justify-center rounded-full"
         >
           <Fontisto name="stethoscope" size={25} color="black" />
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => {
+            router.push("/testcall");
+            // Alert.alert(
+            //   "Sorry",
+            //   "Currently we are not able to connect you with a verified docter. We are adding more docters soon."
+            // );
+          }}
           style={{ elevation: 8 }}
           className=" bg-white h-[60px] w-[60px] items-center justify-center rounded-full"
         >
           <Ionicons name="call-outline" size={25} color="black" />
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => {
+            router.push("/assistant");
+          }}
           style={{ elevation: 8 }}
           className=" bg-white h-[60px] w-[60px] items-center justify-center rounded-full"
         >
           <Entypo name="chat" size={25} color="black" />
         </TouchableOpacity>
         <TouchableOpacity
+          onLongPress={async () => {
+            try {
+              await SecureStore.deleteItemAsync("user");
+              router.replace("/login");
+            } catch {}
+          }}
           style={{ elevation: 8 }}
           className=" bg-white h-[60px] w-[60px] items-center justify-center rounded-full"
         >
@@ -93,7 +123,7 @@ const home = () => {
         />
       </View>
 
-      <View className="w-[90%] mt-8 bg-white rounded-2xl flex-row items-center px-4 py-4 justify-between">
+      <View className="w-[90%] mt-6 bg-white rounded-2xl flex-row items-center px-4 py-4 justify-between">
         <View className="flex-col">
           <Text className="font-bold">
             {"Medical Consultation With Dr. Rao"}
@@ -109,7 +139,10 @@ const home = () => {
           <Text className="font-bold">{"Eye Test at Anand Lab"}</Text>
           <Text className="font-light text-xs">{"Yesterday, 11:27pm"}</Text>
         </View>
-        <TouchableOpacity className="bg-blue-800 px-4 py-1 rounded-full">
+        <TouchableOpacity
+          onLongPress={() => {}}
+          className="bg-blue-800 px-4 py-1 rounded-full"
+        >
           <Text className="text-white font-[500] text-[14px] ">{"Print"}</Text>
         </TouchableOpacity>
       </View>
@@ -117,15 +150,12 @@ const home = () => {
       <TouchableOpacity
         // disabled={Processing}
         onPress={() => {
-          console.log(UserInputData);
-          if (UserInputData.email && UserInputData.password) {
-            login();
-          }
+          router.push("/assistant");
         }}
         style={{
           elevation: 8,
         }}
-        className="bg-[#006be6] justify-center items-center rounded-2xl mt-7 w-[80%] h-[65px]"
+        className="bg-[#006be6] justify-center items-center rounded-2xl mt-4 w-[80%] h-[65px]"
       >
         <Text className="text-white font-semibold text-lg">
           {"Chat with Virtual Doctor"}
