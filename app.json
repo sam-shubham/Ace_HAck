@@ -4,7 +4,15 @@
     "web": {
       "bundler": "metro"
     },
+    "android": {
+      "package": "com.samshubham.eMedic"
+    },
     "name": "eMedic",
-    "slug": "eMedic"
+    "slug": "eMedic",
+    "extra": {
+      "eas": {
+        "projectId": "38963a8a-f699-4d1f-8bda-5ac5d376294b"
+      }
+    }
   }
 }

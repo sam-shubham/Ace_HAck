@@ -7,21 +7,71 @@ import {
   // Platform,
   StatusBar,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { AntDesign, FontAwesome5, Entypo } from "@expo/vector-icons";
 // import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
+import { LOGIN_API, REGISTER_API } from "../src/utils/vars";
+import axios from "axios";
 
 const login = () => {
   const [navState, setnavState] = useState("intro");
   const [passwordVisible, setpasswordVisible] = useState(false);
   const [Processing, setProcessing] = useState(false);
+  const [UserInputData, setUserInputData] = useState({});
   const router = useRouter();
   useEffect(() => {
     setnavState("register");
   }, []);
+
+  useEffect(() => {
+    // setProcessing(true);
+    setTimeout(() => {
+      // setProcessing(false);
+    }, 2000);
+  }, [navState]);
+
+  async function login() {
+    try {
+      setProcessing(true);
+      let { data } = await axios.post(LOGIN_API, {
+        email: UserInputData.email,
+        password: UserInputData.password,
+      });
+
+      setProcessing(false);
+      if (!data.success) return console.log("ERRRRR", data);
+
+      console.log(data);
+      Alert.alert("Success", data.message);
+    } catch (e) {
+      console.log(e);
+
+      setProcessing(true);
+    }
+  }
+
+  async function register() {
+    try {
+      setProcessing(true);
+      console.log(UserInputData);
+      let { data } = await axios.post(REGISTER_API, {
+        ...UserInputData,
+      });
+
+      setProcessing(false);
+
+      if (!data.success) return console.log("ERRRRR", data);
+
+      console.log(data);
+      Alert.alert("Success", data.message);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <View
@@ -99,6 +149,13 @@ const login = () => {
             <TextInput
               className="w-[80%] mt-[60px] px-5 bg-blue-200 rounded-lg h-[65px]"
               placeholder="E-mail"
+              value={UserInputData?.email}
+              onChangeText={(data) => {
+                setUserInputData({
+                  ...UserInputData,
+                  email: data,
+                });
+              }}
             />
             <View className=" relative flex-row justify-center">
               <TextInput
@@ -106,6 +163,13 @@ const login = () => {
                 className="w-[80%] mt-4 px-5 bg-blue-200 rounded-lg h-[65px]"
                 placeholder="Password"
                 textContentType="password"
+                value={UserInputData?.password}
+                onChangeText={(data) => {
+                  setUserInputData({
+                    ...UserInputData,
+                    password: data,
+                  });
+                }}
               />
               <TouchableOpacity
                 onPress={() => {
@@ -121,6 +185,13 @@ const login = () => {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
+              disabled={Processing}
+              onPress={() => {
+                console.log(UserInputData);
+                if (UserInputData.email && UserInputData.password) {
+                  login();
+                }
+              }}
               style={{
                 elevation: 8,
               }}
@@ -163,10 +234,18 @@ const login = () => {
             <TextInput
               className="w-[80%] mt-[60px] px-5 bg-blue-200 rounded-lg h-[65px]"
               placeholder="Name"
+              value={UserInputData?.name}
+              onChangeText={(data) => {
+                setUserInputData({ ...UserInputData, name: data });
+              }}
             />
             <TextInput
               className="w-[80%] mt-4 px-5 bg-blue-200 rounded-lg h-[65px]"
               placeholder="E-mail"
+              value={UserInputData?.email}
+              onChangeText={(data) => {
+                setUserInputData({ ...UserInputData, email: data });
+              }}
             />
             <View className=" relative flex-row justify-center">
               <TextInput
@@ -174,6 +253,10 @@ const login = () => {
                 className="w-[80%] mt-4 px-5 bg-blue-200 rounded-lg h-[65px]"
                 placeholder="Password"
                 textContentType="password"
+                value={UserInputData?.password}
+                onChangeText={(data) => {
+                  setUserInputData({ ...UserInputData, password: data });
+                }}
               />
               <TouchableOpacity
                 onPress={() => {
@@ -194,6 +277,16 @@ const login = () => {
               placeholder="Confirm Password"
             /> */}
             <TouchableOpacity
+              disabled={Processing}
+              onPress={() => {
+                if (
+                  UserInputData.email &&
+                  UserInputData.password &&
+                  UserInputData.name
+                ) {
+                  register();
+                }
+              }}
               style={{
                 elevation: 8,
               }}
@@ -281,7 +374,7 @@ const login = () => {
         By continuing. you accept the TermsOfUse and PrivacyPolicy
       </Text> */}
 
-      {true && (
+      {Processing && (
         <>
           <StatusBar backgroundColor={"#0005"} />
           <View
@@ -295,6 +388,7 @@ const login = () => {
             <View className="w-[80%] h-[30%] rounded-xl bg-blue-100  flex-col items-center justify-center">
               <LottieView
                 autoPlay
+                loop
                 // ref={animation}
                 autoSize
                 resizeMode="cover"

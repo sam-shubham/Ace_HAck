@@ -1,6 +1,6 @@
-const AUTH_API = "https://admin.ifoodiesapp.com/api/auth/signup";
-const RECIPIES_API = "https://admin.ifoodiesapp.com/api/recipie/loadRecipies";
-const RECIPIES_HOME_API = "https://admin.ifoodiesapp.com/api/recipie/getHome";
+const REGISTER_API = "http://192.168.122.12:4566/api/user/signup";
+const LOGIN_API = "http://192.168.122.12:4566/api/user/login";
+const SOCKET_HOST = "http://192.168.122.12:4566/api/AppSocket";
 const IMAGE_HOST = "https://admin.ifoodiesapp.com";
 
-export { AUTH_API, RECIPIES_API, RECIPIES_HOME_API, IMAGE_HOST };
+export { REGISTER_API, LOGIN_API, SOCKET_HOST, IMAGE_HOST };

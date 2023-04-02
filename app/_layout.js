@@ -9,7 +9,7 @@ const _layout = () => {
   useEffect(() => {
     // router.push("/home");
     setTimeout(() => {
-      router.push("/login");
+      router.push("/home");
     }, 2000);
   }, []);
 
