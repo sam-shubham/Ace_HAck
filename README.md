@@ -30,4 +30,6 @@ This is how our chatbot works
 <img src = Chatbot_Images/chatbot5.jpeg width = 200px height = 400px>
 
 ____
+
+https://user-images.githubusercontent.com/95525120/229537854-8a3c5294-4ceb-436e-ab4e-ad683566b75d.mp4
 # This is how it works
