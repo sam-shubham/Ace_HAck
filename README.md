@@ -23,9 +23,7 @@ We've used power point slides in order to make your experience better.
 ____
 This is how our chatbot works
 ----
-<img src = Chatbot_Images/chatbot1.jpeg width = 200px height = 400px> <img src = Chatbot_Images/chatbot2.jpeg width = 200px height = 400px> <img src = Chatbot_Images/chatbot3.jpeg width = 200px height = 400px>
-<img src = Chatbot_Images/chatbot4.jpeg width = 200px height = 400px>
-<img src = Chatbot_Images/chatbot5.jpeg width = 200px height = 400px>
+<img src = Chatbot_Images/chatbot1.jpeg width = 200px height = 400px> <img src = Chatbot_Images/chatbot2.jpeg width = 200px height = 400px> <img src = Chatbot_Images/chatbot3.jpeg width = 200px height = 400px> <img src = Chatbot_Images/chatbot4.jpeg width = 200px height = 400px> <img src = Chatbot_Images/chatbot5.jpeg width = 200px height = 400px>
 
 ____
 
